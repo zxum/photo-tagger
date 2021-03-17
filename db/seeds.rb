@@ -5,3 +5,19 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Picture.delete_all 
+Character.delete_all 
+Player.delete_all
+Scoreboard.delete_all 
+
+pictures = Picture.create([
+  {id: 1, title: "Where in the 90's?", imgsrc:"most90spic.jpg"},
+  {id: 2, title: "Where in the 80's?", imgsrc:"most80spic.jpg"}
+])
+
+characters = Character.create([
+  {id: 1, name: "Neo", title: "Matrix", found: false, picture_id: 1, x1: 100, x2: 120, y1: 100, y2: 120},
+  {id: 2, name: "Ash", title: "Pokemon", found: false, picture_id: 1, x1: 200, x2: 220, y1: 200, y2: 220},
+  {id: 3, name: "Falkor", title: "The Neverending Story", found: false, picture_id: 2, x1: 100, x2: 150, y1: 100, y2: 150}
+])
