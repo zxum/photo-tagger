@@ -9,7 +9,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={GameSelection} />
-          <Route path="/picture/:id" 
+          <Route path="/game/:id" 
                 render={(props)=>(
                   <GamePage {...props} />
                 )} /> 

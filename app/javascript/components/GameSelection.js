@@ -10,19 +10,19 @@ function GameSelection() {
     <div className="game-selection-box">
       <div className="game-option" id="nineties">
         <h1>WHERE IN THE 90's?</h1>
-        <Link to='/picture/1'>
+        <Link to='/game/1'>
           <img src={image90s} className="option-imgs"/>
         </Link>
-        <Link to='/picture/1'>
+        <Link to='/game/1'>
           <p>SELECT</p>
         </Link>
       </div>
       <div className="game-option" id="eighties">
         <h1>WHERE IN THE 80's?</h1>
-        <Link to='/picture/2'>
+        <Link to='/game/2'>
           <img src={image80s} className="option-imgs"/>
         </Link>
-        <Link to='/picture/2'>
+        <Link to='/game/2'>
           <p>SELECT</p>
         </Link>
       </div>
