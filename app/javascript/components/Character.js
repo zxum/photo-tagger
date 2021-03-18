@@ -3,7 +3,6 @@ import React from 'react'
 function Character() {
   let requestImageFiles = require.context('../../assets/images',true,/.jpg$/) 
   let image = requestImageFiles('./falkor.jpg')
-  console.log(image)
 
   return (
     <div className="flex-wrapper">

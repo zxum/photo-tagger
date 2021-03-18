@@ -28,6 +28,7 @@ body,
 #root,
 .app-main {
     height: 100vh;
+    background-color: #312F45;
 }
 
 .nav-wrapper {
@@ -43,6 +44,10 @@ body,
 .found {
     font-size: 1.5rem;
     color: #E5E5E5;
+}
+
+.found {
+    cursor: pointer;
 }
 
 .hidden {
@@ -83,10 +88,59 @@ body,
     height: 70px;
 }
 
+.option-imgs {
+    object-fit: cover;
+    width: 300px;
+    height: 300px;
+}
+
 .character-name {
     color: #F3FAFF;
 }
 
 .character-title {
     color: #75BAE8;
+}
+
+.leaderboard,
+.back-menu {
+    cursor: pointer;
+}
+
+i {
+    font-size: 1.5rem;
+    color: #B2B3C4;
+}
+
+.game-selection-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15%;
+}
+
+.game-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #F3FAFF;
+    padding: 1rem;
+}
+
+.game-option h1 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.game-option p {
+    margin-top: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: #F3FAFF;
+    transition: all 0.3s ease-in-out;
+}
+
+.game-option p:hover {
+    transform: scale(1.2)
 }

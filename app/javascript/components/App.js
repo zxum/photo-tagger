@@ -1,13 +1,20 @@
 import React from 'react'
-import Navbar from './Navbar'
-import Game from './Game'
+
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import GameSelection from './GameSelection'
+import GamePage from './GamePage'
 
 function App() {
   return (
-    <div className="app-main">
-      <Navbar /> 
-      <Game />
-    </div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={GameSelection} />
+          <Route path="/picture/:id" 
+                render={(props)=>(
+                  <GamePage {...props} />
+                )} /> 
+        </Switch>
+      </BrowserRouter>
   )
 }
 
