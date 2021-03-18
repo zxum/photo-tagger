@@ -1,9 +1,12 @@
 import React from 'react'
+import Navbar from './Navbar'
+import Game from './Game'
 
 function App() {
   return (
-    <div>
-      Hello World!
+    <div className="app-main">
+      <Navbar /> 
+      <Game />
     </div>
   )
 }
