@@ -11,7 +11,11 @@ module Api
       def show 
         picture = Picture.find_by(id: params[:id])
 
-        render json: PictureSerializer.new(picture).as_json
+        render json: PictureSerializer.new(picture, options).as_json
+      end
+
+      def options 
+        @options ||= { include: %i[characters]}
       end
 
     end

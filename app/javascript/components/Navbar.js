@@ -4,22 +4,21 @@ import {Link} from 'react-router-dom'
 
 function Navbar(props) {
 
-  let [hidden, setHidden] = useState(true)
+  let characters
+  let title
+
+  props.characters ? characters = props.characters : characters = []
+  props.picture ? title = props.picture.title : title = "Where in the ?"
 
   const handleOpenSidebar = () => {
     setHidden(!hidden)
   }
 
+  let [hidden, setHidden] = useState(true)
   let status 
   hidden === true ? status = "characters hidden" : status = "characters"
 
-  let title 
-  if(Object.keys(props.picture).length !== 0){
-    let picture = props.picture.data.data.attributes
-    title = picture.title
-  } else {
-    title = "Where in the ?"
-  }
+
 
   return (
     <nav>
@@ -34,11 +33,11 @@ function Navbar(props) {
       </div>
 
       <div className={status} id="sidebar">
-        <Character />
-        <Character />
-        <Character />
-        <Character />
-        <Character />
+        <Character character={characters[0]} requestImageFiles={props.requestImageFiles} />
+        <Character character={characters[1]} requestImageFiles={props.requestImageFiles} />
+        <Character character={characters[2]} requestImageFiles={props.requestImageFiles} />
+        <Character character={characters[3]} requestImageFiles={props.requestImageFiles} />
+        <Character character={characters[4]} requestImageFiles={props.requestImageFiles} />
       </div>
       
     </nav>

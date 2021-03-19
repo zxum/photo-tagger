@@ -1,15 +1,26 @@
 import React from 'react'
 
-function Character() {
-  let requestImageFiles = require.context('../../assets/images',true,/.jpg$/) 
-  let image = requestImageFiles('./falkor.jpg')
+function Character(props) {
+
+
+  let image, name, title
+  if (props.character){
+    let character = props.character.attributes 
+    image = props.requestImageFiles('./' + character.imgsrc)
+    name = character.name 
+    title = character.title
+  } else {
+    image = ''
+    name = 'Placeholder'
+    title = 'Placeholder'
+  }
 
   return (
     <div className="flex-wrapper">
       <img src={image} alt="" className="character-icon"/>
       <div className="wrapper">
-        <p className="character-name">Falkor</p>
-        <p className="character-title">The NeverEnding Story</p>  
+        <p className="character-name">{name}</p>
+        <p className="character-title">{title}</p>  
       </div>
     </div>
   )
