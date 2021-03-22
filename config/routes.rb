@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  # Root path
   root "pages#index"
 
+  # API paths from Rails
   namespace :api do 
     namespace :v1 do
       resources :pictures, param: :id
-      resources :characters, only: [:index]
+      resources :characters, only: :update
     end
   end
 
+  # Pass to React Router for any other path
   get '*path', to: 'pages#index', via: :all
 end

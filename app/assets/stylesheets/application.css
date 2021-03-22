@@ -31,6 +31,8 @@ body,
     background-color: #312F45;
 }
 
+.app-main {}
+
 .nav-wrapper {
     background-color: #312F45;
     display: flex;
@@ -41,12 +43,12 @@ body,
 }
 
 .timer,
-.found {
+.char-found {
     font-size: 1.5rem;
     color: #E5E5E5;
 }
 
-.found {
+.char-found {
     cursor: pointer;
 }
 
@@ -143,4 +145,29 @@ i {
 
 .game-option p:hover {
     transform: scale(1.2)
+}
+
+.context-menu {
+    position: absolute;
+    z-index: 1;
+}
+
+.context-menu ul {
+    background-color: #312F45;
+    color: #F3FAFF;
+}
+
+.context-menu li {
+    list-style: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.found img {
+    filter: grayscale(100%) brightness(50%);
+}
+
+.found p {
+    color: #B2B3C4;
+    text-decoration: line-through;
 }
