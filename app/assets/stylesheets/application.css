@@ -186,9 +186,36 @@ i {
 
 .flex-row {
     display: flex;
+    justify-content: space-between;
     padding: 1rem;
+    width: 35%;
 }
 
 .player-score {
     padding-left: 4rem;
+}
+
+.player-name-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    z-index: 1;
+}
+
+.form-control {
+    background-color: #312F45;
+    padding: 3rem;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    color: #B2B3C4;
+}
+
+form.player-form {
+    margin-top: 15%;
 }

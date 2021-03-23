@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :pictures, param: :id
       resources :characters, only: :update
+      resources :scoreboards, only: [:show, :create, :update], param: :id
     end
   end
 

@@ -18,6 +18,9 @@ function GamePage(props) {
   let [minute, setMinute] = useState('00')
   let [isActive, setActive] = useState(false)
   let [counter, setCounter] = useState(0)
+
+  let [formActive, setFormActive] = useState(false)
+  let [score, setScore] = useState('--:--')
  
   useEffect(() => {
     let intervalId;
@@ -106,14 +109,45 @@ function GamePage(props) {
 
   const handleWin = async () => {
     setActive(false)
-    await axios.patch(`/api/v1/scoreboard/${id}`, { score: `${minute}:${second}`}) 
-                .then(response => {
-                  console.log(response)
-                })
+    setFormActive(true)
+    setScore(`${minute}:${second}`)
+  }
+
+  
+
+  const handleNameSubmit = (event) => {
+    event.preventDefault()
+    setFormActive(false)
+
+    let name = event.target.firstChild.lastChild.value
+    
+    handlePlayerCreation(name)
+    event.target.reset()
+  }
+
+  let handlePlayerCreation = async (name) => {
+    let token = document.querySelector('[name=csrf-token]').content 
+
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = token
+
+    axios.post(`/api/v1/scoreboards`,{ playername: name, score: `${score}`, picture_id: id  })
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
   }
 
   return (
     <div className="app-main">
+
+      {formActive && (<div className="player-name-modal">
+        <form onSubmit={handleNameSubmit} className ="player-form">
+          <div className="form-control">
+            <label htmlFor="player-name">Player Name:</label>
+            <input type="text" id="player-name" />
+          </div>
+        </form>
+      </div>
+      )}
+
       <Navbar picture={picture} 
               characters={characters} 
               requestImageFiles={requestImageFiles}
@@ -129,7 +163,7 @@ function GamePage(props) {
               handleMenuClick={handleMenuClick}/>
       )}
       <div className="image-div" onClick={handleImageClick}>
-      <Game picture={picture} 
+        <Game picture={picture} 
             characters={characters}
             requestImageFiles={requestImageFiles}
             handleMenuClick={handleMenuClick}/>
