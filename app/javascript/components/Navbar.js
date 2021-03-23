@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 
 function Navbar(props) {
 
-  let characters, title, status 
+  let characters, title, status, scoreboard
 
   let [hidden, setHidden] = useState(true)
   
@@ -12,7 +12,13 @@ function Navbar(props) {
 
   props.characters ? characters = props.characters : characters = []
 
-  props.picture ? title = props.picture.title : title = "Where in the ?"
+  if (props.picture)  {
+    title = props.picture.title
+    scoreboard = `/scoreboard/${props.picture.id}`
+  } else {
+    title = "Where in the ?"
+    scoreboard = ''
+  }
 
   let found = characters.filter(char => char.attributes.found === 't')
   
@@ -29,15 +35,17 @@ function Navbar(props) {
             <i className="fas fa-arrow-circle-left"></i>
           </div>
         </Link>
-        <div className="timer">0:00</div>
+        <div className="timer">{props.minute}:{props.second}</div>
         
         <div className="title">{title}</div>
         
         <div onClick={handleOpenSidebar} className="char-found">{found.length}/{characters.length}</div>
         
-        <div className="leaderboard">
-          <i className="fas fa-trophy"></i>
-        </div>
+        <Link to={scoreboard}>
+          <div className="leaderboard">
+            <i className="fas fa-trophy"></i>
+          </div>
+        </Link>
       </div>
 
       <div className={status} id="sidebar">
