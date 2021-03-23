@@ -171,3 +171,24 @@ i {
     color: #B2B3C4;
     text-decoration: line-through;
 }
+
+.scoreboard-wrapper {
+    color: #B2B3C4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.scoreboard-wrapper h1 {
+    margin-bottom: 3rem;
+}
+
+.flex-row {
+    display: flex;
+    padding: 1rem;
+}
+
+.player-score {
+    padding-left: 4rem;
+}
