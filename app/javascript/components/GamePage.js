@@ -21,7 +21,7 @@ function GamePage(props) {
 
   let [formActive, setFormActive] = useState(false)
   let [score, setScore] = useState('--:--')
- 
+
   useEffect(() => {
     let intervalId;
 
@@ -50,9 +50,10 @@ function GamePage(props) {
         setPicture(data.data.attributes)
         setCharacters(data.included)
         setActive(true)
-      }) 
+      })
     }
   },[])
+
 
   const handleImageClick = (event) => {
     let offset
@@ -82,22 +83,19 @@ function GamePage(props) {
         return char.id === id})
       let {left, top, width, height} = character.attributes 
       let xMin = left 
-      let xMax = left + width 
+      let xMax = left + width
       let yMin = top 
       let yMax = top + height
 
       if (x >= xMin && x <= xMax && y >= yMin && y <= yMax) {
-        await axios.patch(`/api/v1/characters/${id}`,{ found: 't' })
-                    .then(response => {
-                      let data = response.data.data 
-                      setCharacters(data)
-                      let foundCharacters = data.filter(char => char.attributes.found == 't')
-                      console.log(characters)
-                      console.log(foundCharacters)
-                      if (foundCharacters.length === 5) {
-                        handleWin() 
-                      }
-                    })
+
+        character.attributes.found = 't'
+        setCharacters = [...characters, character]
+        console.log(characters)
+        let foundCharacters = characters.filter(char => char.attributes.found == 't')
+        if (foundCharacters.length === 5) {
+          handleWin() 
+        }
       }
 
       setContextMenuHidden(!contextMenuHidden)
@@ -107,7 +105,7 @@ function GamePage(props) {
     }
   }
 
-  const handleWin = async () => {
+  const handleWin = () => {
     setActive(false)
     setFormActive(true)
     setScore(`${minute}:${second}`)
@@ -123,6 +121,7 @@ function GamePage(props) {
     
     handlePlayerCreation(name)
     event.target.reset()
+    
   }
 
   let handlePlayerCreation = async (name) => {
@@ -131,7 +130,7 @@ function GamePage(props) {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = token
 
     axios.post(`/api/v1/scoreboards`,{ playername: name, score: `${score}`, picture_id: id  })
-    .then(response => console.log(response))
+    .then(() => props.history.push(`/scoreboard/${id}`))
     .catch(error => console.log(error))
   }
 
