@@ -4,7 +4,7 @@ import Game from './Game'
 import ContextMenu from './ContextMenu'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.min.css'
 
 function GamePage(props) {
   let id = props.match.params.id 
