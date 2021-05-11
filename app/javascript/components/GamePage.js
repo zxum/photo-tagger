@@ -11,6 +11,7 @@ function GamePage(props) {
   let [characters, setCharacters] = useState()
   let [menuPos, setMenuPos] = useState({x:0,y:0})
   let [selectionPos, setSelectionPos] = useState({x:0,y:0})
+  let [offsetPer, setOffsetPer] = useState({offset:0})
   let [contextMenuHidden, setContextMenuHidden] = useState(false)
   let requestImageFiles = require.context('../../assets/images',true,/.jpg$/)
   
@@ -22,6 +23,9 @@ function GamePage(props) {
   let [formActive, setFormActive] = useState(false)
   let [score, setScore] = useState('--:--')
 
+  let navRef = React.createRef()
+
+  // Create Timer for Scoreboard 
   useEffect(() => {
     let intervalId;
 
@@ -43,6 +47,7 @@ function GamePage(props) {
     return () => clearInterval(intervalId);
   }, [isActive, counter])
 
+  // Get data about game image 
   useEffect(()=>{
     {fetch(`../api/v1/pictures/${id}.json`)
       .then(response=> response.json())
@@ -54,30 +59,30 @@ function GamePage(props) {
     }
   },[])
 
-
+  // Checks whether a page click matches an image
   const handleImageClick = (event) => {
-    let offset
-    (id == 1 ? offset = 4 : offset = 7)
-    console.log(offset)
     event.preventDefault()
-    // console.log(event)
+
+    /* pageX pageY scrollHeight scrollWidth */
     let {pageX,pageY} = event
     let {scrollHeight,scrollWidth} = event.target
+    let navHeight = navRef.current.clientHeight  // Get the height of the navbar
+
+    let offsetPercent = (navHeight/(scrollHeight + navHeight)) * 100
     let xposPercent = pageX/scrollWidth * 100 
-    let yposPercent = (pageY/scrollHeight * 100) - offset
+    let yposPercent = (pageY/(scrollHeight + navHeight) * 100)
+
     let xpos = pageY
     let ypos = pageX
-
-    console.log({xposPercent,yposPercent})
 
     setSelectionPos({x:xposPercent, y:yposPercent})
     setMenuPos({x:xpos, y: ypos})
     setContextMenuHidden(!contextMenuHidden)
-    /* pageX pageY scrollHeight scrollWidth */ 
-  
+    setOffsetPer({offset:offsetPercent})
   }
 
-  const handleMenuClick = async ( id, x, y ) => {
+  // Select which character player thinks it is and check position
+  const handleMenuClick = async (id, x, y, offset) => {
     try{
       let character = characters.find(char => {
         return char.id === id})
@@ -85,13 +90,13 @@ function GamePage(props) {
       let xMin = left 
       let xMax = left + width
       let yMin = top 
-      let yMax = top + height
+      let yMax = top + height + offset
+      
 
       if (x >= xMin && x <= xMax && y >= yMin && y <= yMax) {
 
         character.attributes.found = 't'
         setCharacters = [...characters, character]
-        console.log(characters)
         let foundCharacters = characters.filter(char => char.attributes.found == 't')
         if (foundCharacters.length === 5) {
           handleWin() 
@@ -151,13 +156,15 @@ function GamePage(props) {
               characters={characters} 
               requestImageFiles={requestImageFiles}
               second={second}
-              minute={minute}/> 
+              minute={minute}
+              ref={navRef} /> 
       {contextMenuHidden && (
         <ContextMenu 
               xPos={menuPos.x} 
               yPos={menuPos.y} 
               xPer={selectionPos.x}
               yPer={selectionPos.y}
+              offsetPer={offsetPer.offset}
               characters={characters}
               handleMenuClick={handleMenuClick}/>
       )}

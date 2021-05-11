@@ -13,7 +13,7 @@ function ContextMenu(props) {
   let list = characters.filter(char=> char.attributes.found === 'f').map(char => {
     return <li key={char.id} 
                id={char.id} 
-               onClick={()=>{props.handleMenuClick(char.id, props.xPer, props.yPer)}}>
+               onClick={()=>{props.handleMenuClick(char.id, props.xPer, props.yPer, props.offsetPer)}}>
                  {char.attributes.name}
             </li>})
 

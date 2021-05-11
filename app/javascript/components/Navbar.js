@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Character from './Character'
 import {Link} from 'react-router-dom'
 
-function Navbar(props) {
+const Navbar = React.forwardRef((props,ref) => {
 
   let characters, title, status, scoreboard
 
@@ -29,7 +29,7 @@ function Navbar(props) {
 
   return (
     <nav>
-      <div className="nav-wrapper">
+      <div className="nav-wrapper" ref={ref}>
         <Link to="/">
           <div className="back-menu">
             <i className="fas fa-arrow-circle-left"></i>
@@ -58,6 +58,6 @@ function Navbar(props) {
       
     </nav>
   )
-}
+})
 
 export default Navbar
