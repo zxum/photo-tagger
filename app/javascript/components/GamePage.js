@@ -3,6 +3,8 @@ import Navbar from './Navbar'
 import Game from './Game'
 import ContextMenu from './ContextMenu'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function GamePage(props) {
   let id = props.match.params.id 
@@ -48,7 +50,7 @@ function GamePage(props) {
   }, [isActive, counter])
 
   // Get data about game image 
-  useEffect(()=>{
+  useEffect(() => {
     {fetch(`../api/v1/pictures/${id}.json`)
       .then(response=> response.json())
       .then(data => {
@@ -94,13 +96,15 @@ function GamePage(props) {
       
 
       if (x >= xMin && x <= xMax && y >= yMin && y <= yMax) {
-
+        toast.success(`You found ${character.attributes.name}`)
         character.attributes.found = 't'
         setCharacters = [...characters, character]
         let foundCharacters = characters.filter(char => char.attributes.found == 't')
         if (foundCharacters.length === 5) {
           handleWin() 
         }
+      } else {
+        toast.error('Try Again!')
       }
 
       setContextMenuHidden(!contextMenuHidden)
@@ -110,14 +114,14 @@ function GamePage(props) {
     }
   }
 
+  // Triggers Name Input and Sets final score 
   const handleWin = () => {
     setActive(false)
     setFormActive(true)
     setScore(`${minute}:${second}`)
   }
 
-  
-
+  // Sends name input to scoreboard
   const handleNameSubmit = (event) => {
     event.preventDefault()
     setFormActive(false)
@@ -129,6 +133,7 @@ function GamePage(props) {
     
   }
 
+  // Posts name and score to scoreboard 
   let handlePlayerCreation = async (name) => {
     let token = document.querySelector('[name=csrf-token]').content 
 
@@ -137,7 +142,7 @@ function GamePage(props) {
     axios.post(`/api/v1/scoreboards`,{ playername: name, score: `${score}`, picture_id: id  })
     .then(() => props.history.push(`/scoreboard/${id}`))
     .catch(error => console.log(error))
-  }
+  } 
 
   return (
     <div className="app-main">
@@ -174,6 +179,7 @@ function GamePage(props) {
             requestImageFiles={requestImageFiles}
             handleMenuClick={handleMenuClick}/>
       </div>
+      <ToastContainer hideProgressBar/>
     </div>
   )
 }
